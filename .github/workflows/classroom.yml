@@ -13,6 +13,24 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      #Agregando las dependencias del entorno virtual
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+          
+    - name: Set up virtual environment
+      run: |
+        python -m venv venv
+        venv\Scripts\activate
+          
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install django==4.2
+        python manage.py makemigrations productos
+        python manage.py migrate
+    #fin de dependencias
     - name: test django
       id: test-django
       uses: classroom-resources/autograding-python-grader@v1
