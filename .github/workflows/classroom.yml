@@ -22,7 +22,7 @@ jobs:
     - name: Set up virtual environment
       run: |
         python -m venv venv
-        source venv/bin/activate
+        source venv\Scripts\activate
           
     - name: Install dependencies
       run: |
