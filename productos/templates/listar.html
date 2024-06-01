@@ -6,24 +6,31 @@
 <h1>Listar Productos</h1>
 <br>
 <a href="{% url 'crear_productos' %}" class="btn btn-primary btn-sm">Crear Producto</a>
-<div class="container mt-4">
-    <div class="row">
+
+<table class="table table-bordered mt-4">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for producto in productos %}
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ producto.nombre }}</h5>
-                    <p class="card-text">
-                        Precio: {{ producto.precio }}<br>
-                        Cantidad: {{ producto.cantidad }}
-                    </p>
-                    <a href="{% url 'editar_producto' producto.id %}" class="btn btn-primary btn-sm">Editar</a>
-                    <a href="{% url 'borrar_producto' producto.id %}" class="btn btn-danger btn-sm"
-                       onclick="return confirm('¿Estás seguro de que deseas borrar este producto?');">Borrar</a>
+        <tr>
+            <td>
+                <div class="producto-info">
+                    <strong>Nombre:</strong> {{ producto.nombre }}<br>
+                    <strong>Precio:</strong> {{ producto.precio }}<br>
+                    <strong>Cantidad:</strong> {{ producto.cantidad }}
                 </div>
-            </div>
-        </div>
+            </td>
+            <td>
+                <a href="{% url 'editar_producto' producto.id %}" class="btn btn-primary btn-sm">Editar</a>
+                <a href="{% url 'borrar_producto' producto.id %}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Estás seguro de que deseas borrar este producto?');">Borrar</a>
+            </td>
+        </tr>
         {% endfor %}
-    </div>
-</div>
+    </tbody>
+</table>
 {% endblock %}
