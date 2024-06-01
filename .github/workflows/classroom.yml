@@ -1,6 +1,6 @@
 name: Autograding Tests
 
-'on':
+on:
   - push
   - repository_dispatch
 
@@ -13,11 +13,10 @@ jobs:
   run-autograding-tests:
     runs-on: ubuntu-latest
     if: github.actor != 'github-classroom[bot]'
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -25,27 +24,31 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run migrations
         run: |
-          source venv/bin/activate
           python manage.py migrate
 
-      - name: test django
+      - name: Run tests
         id: test-django
+        run: |
+          python manage.py test
+
+      - name: Autograding
+        id: autograding
         uses: classroom-resources/autograding-python-grader@v1
         with:
           timeout: 1
           max-score: 20
-          setup-command: python manage.py test
+          setup-command: |
+            source venv/bin/activate
+            python manage.py test
 
       - name: Autograding Reporter
         uses: classroom-resources/autograding-grading-reporter@v1
         env:
-          TEST-DJANGO_RESULTS: "${{steps.test-django.outputs.result}}"
+          TEST-DJANGO_RESULTS: "${{steps.autograding.outputs.result}}"
         with:
-          runners: test-django
+          runners: autograding
