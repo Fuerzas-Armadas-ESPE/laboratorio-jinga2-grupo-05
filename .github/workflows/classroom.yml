@@ -45,6 +45,9 @@ jobs:
           setup-command: |
             source venv/bin/activate
             python manage.py test
+        env:
+          pythonLocation: /opt/hostedtoolcache/Python/3.8.18/x64
+          LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.18/x64/lib
 
       - name: Autograding Reporter
         uses: classroom-resources/autograding-grading-reporter@v1
@@ -52,3 +55,4 @@ jobs:
           TEST-DJANGO_RESULTS: "${{steps.autograding.outputs.result}}"
         with:
           runners: autograding
+          token: ${{ secrets.GITHUB_TOKEN }}
