@@ -28,9 +28,13 @@ jobs:
         run: |
           python manage.py migrate
 
-      - name: Test Django
-        run: |
-          python manage.py test
+      - name: test django
+        id: test-django
+        uses: classroom-resources/autograding-python-grader@v1
+        with:
+          timeout: 1
+          max-score: 20
+          setup-command: python manage.py test
 
       - name: Autograding Reporter
         uses: classroom-resources/autograding-grading-reporter@v1
