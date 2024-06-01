@@ -4,6 +4,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Crear la URL de la app productos
-    path('', include('productos.urls')),
-    path('crear/', include('productos.urls')),
+    path('', include('productos.urls'))
 ]
